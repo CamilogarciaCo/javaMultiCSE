@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Lista de Productos</h1>
+    <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+        </thead>
+        <tbody id="productTableBody">
+        <!-- Los productos se añadirán aquí mediante JavaScript -->
+        </tbody>
+    </table>
+    <button class="btn btn-primary" onclick="loadProducts()">Cargar Productos</button>
+</div>
+
+<script>
+    async function loadProducts() {
+        const response = await fetch('/products'); // Cambia esto si tu endpoint es diferente
+        const products = await response.json();
+        const productTableBody = document.getElementById('productTableBody');
+        productTableBody.innerHTML = '';
+
+        products.forEach(product => {
+            const row = `<tr>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.category}</td>
+                <td>${product.price}</td>
+                <td>${product.stock}</td>
+            </tr>`;
+            productTableBody.innerHTML += row;
+        });
+    }
+</script>
+</body>
+</html>
